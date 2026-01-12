@@ -1,0 +1,121 @@
+/* About.css */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400&display=swap');
+
+.about-section {
+  min-height: 100vh;
+  background-color: #050505;
+  color: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 5%;
+  overflow: hidden;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  gap: 4rem;
+  width: 100%;
+  max-width: 1400px;
+  align-items: center; /* Vertically center image and text */
+}
+
+/* --- IMAGE STYLES (UPDATED) --- */
+.about-img-container {
+  width: 100%;
+  /* REMOVED: height: 70vh; -> This was forcing the crop */
+  height: auto; 
+  
+  overflow: hidden;
+  border-radius: 12px;
+  
+  /* Initial State for Animation */
+  opacity: 0;
+  transform: scale(1.1); 
+}
+
+.about-img-container img {
+  width: 100%;      /* Fill the width of the column */
+  height: auto;     /* Maintain original aspect ratio (No stretching/cropping) */
+  display: block;   /* Removes tiny bottom space */
+  object-fit: contain; /* Ensures the full image is visible */
+}
+
+/* --- TEXT STYLES --- */
+.about-text-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.typewriter-wrapper {
+  width: fit-content;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.about-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 4vw;
+  text-transform: uppercase;
+  color: white;
+  margin: 0;
+  line-height: 1;
+}
+
+.body-text-wrapper {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  max-width: 600px;
+}
+
+.body-text {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* SIGNATURE */
+.signature-container {
+  width: 100%;
+  max-width: 500px;
+  margin-top: 2rem;
+}
+
+.signature-svg {
+  width: 100%;
+  height: auto;
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 900px) {
+  .about-section {
+    padding-top: 120px;
+    align-items: flex-start;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr; /* Stack vertically */
+    gap: 3rem;
+  }
+
+  .about-img-container {
+    /* Ensure image doesn't get too massive on mobile if it's tall */
+    max-height: 80vh; 
+    width: 100%;
+  }
+  
+  .about-img-container img {
+     /* Ensures strictly no cropping even if max-height is hit */
+     object-fit: contain; 
+  }
+
+  .about-title {
+    font-size: 3rem;
+  }
+  
+  .signature-container {
+    max-width: 300px;
+  }
+}
