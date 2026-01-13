@@ -3,9 +3,10 @@ import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import './About.css'; // Import the CSS file
 import kiran from '../assets/kiranlll.jpg';
+import kie from '../assets/kiranpo.jpg';
 // Replace with your actual image path
 // import aboutImg from '../assets/CRETA.jpg'; 
-const aboutImg = kiran; 
+const aboutImg = kie; 
 
 export default function About() {
   const container = useRef();
@@ -69,7 +70,7 @@ export default function About() {
 
         {/* LEFT: Image (Will be Top on Mobile) */}
         <div className="about-img-container">
-          <img src={aboutImg} alt="Kiran" />
+          <img src={aboutImg} alt="Kie" />
         </div>
 
         {/* RIGHT: Text (Will be Bottom on Mobile) */}
@@ -83,13 +84,14 @@ export default function About() {
 
           <div className="body-text-wrapper">
             <p className="body-text">
-              I am <strong>Kiran</strong>, a Visual Director and Editor based in India.
+              I am <strong>Kiran</strong>,a Cinematographer and Editor based in India.
             </p>
             <p className="body-text"> 
-               A passionate Video Editor and Photographer who believes every frame tells a story. With a strong eye for detail, composition, and color, I transform raw moments into visually compelling content. From cinematic video edits to expressive photography, my goal is to create visuals that connect emotionally and leave a lasting impression.
-            </p>
+               A passionate Video Editor and
+Cinematographer who believes every frame tells a story. With a strong eye for detail, composition, and color, I transform raw moments into visually compelling content. From cinematic video edits to expressive photography, my goal is to create visuals that connect emotionally and leave a lasting impression.
+</p>
             <p className="body-text"> 
-              I specialize in photo editing, video editing, and creative storytelling, delivering high-quality visuals tailored to brands, creators, and individuals.
+             I specialize in photo editing, video editing, and creative storytelling, delivering high-quality visuals tailored to brands, creators, and individuals.
             </p>
           </div>
 

@@ -1,27 +1,33 @@
-import { useEffect, useLayoutEffect } from 'react'; // 1. Import useLayoutEffect
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import React, { useEffect, useLayoutEffect } from 'react';
+// Using HashRouter for GitHub Pages support
+import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 
-// Components
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Gallery from './components/Gallery';
-import CustomCursor from './components/CustomCursor';
-import Footer from './components/Footer';
-import About from './components/About'; 
+// --- COMPONENTS ---
+import Navbar from './components/Navbar'; 
+import Hero from './components/Hero';     
+import Gallery from './components/Gallery'; 
+import About from './components/About';
 
 gsap.registerPlugin(ScrollTrigger);
 
+/**
+ * HOME COMPONENT
+ * Contains the Hero and the Works Gallery
+ */
 function Home() {
   const location = useLocation();
-  
+
+  // Handle scroll to #works if coming from another page
   useEffect(() => {
-    if (location.hash) {
-      const elem = document.getElementById(location.hash.slice(1));
+    if (location.hash === '#works') {
+      const elem = document.getElementById('works');
       if (elem) {
-        elem.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => {
+          elem.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
       }
     }
   }, [location]);
@@ -36,43 +42,49 @@ function Home() {
   );
 }
 
+/**
+ * LAYOUT COMPONENT
+ * Handles Smooth Scroll (Lenis) and Scroll Restoration
+ */
 function Layout() {
   const location = useLocation();
 
-  // --- FIX START: FORCE SCROLL TO TOP ON REFRESH ---
+  // 1. SCROLL RESTORATION FIX
+  // Forces the browser to start at the top on refresh/route change
   useLayoutEffect(() => {
-    // 1. Tell browser not to restore scroll position automatically
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
-    // 2. Force scroll to top instantly
     window.scrollTo(0, 0);
   }, [location.pathname]);
-  // --- FIX END ---
 
+  // 2. LENIS SMOOTH SCROLL SETUP
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smooth: true,
+      touchMultiplier: 2,
     });
 
-    // Ensure Lenis also knows we are at the top
-    lenis.scrollTo(0, { immediate: true });
-
+    // Sync Lenis with GSAP ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add((time) => lenis.raf(time * 1000));
+    
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+    
     gsap.ticker.lagSmoothing(0);
 
     return () => {
       gsap.ticker.remove(lenis.raf);
       lenis.destroy();
     };
-  }, [location.pathname]);
+  }, []);
 
   return (
     <>
-      <CustomCursor />
+      {/* <CustomCursor /> */}
       <Navbar />
       
       <Routes>
@@ -80,11 +92,14 @@ function Layout() {
         <Route path="/about" element={<About />} />
       </Routes>
 
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
 
+/**
+ * MAIN APP
+ */
 export default function App() {
   return (
     <Router>
